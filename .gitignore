@@ -1,5 +1,5 @@
 # Custom ignores
-binaries/Macros
+binaries/*
 .idea
 .DS_Store
 build

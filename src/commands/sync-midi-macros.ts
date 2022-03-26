@@ -1,10 +1,10 @@
-import type { Arguments, CommandBuilder } from 'yargs';
 import { promises as fs, writeFileSync } from 'fs';
 import { resolve } from 'path';
+import type { Arguments, CommandBuilder } from 'yargs';
 import { createNoteOff, isOffNote } from '../midi/off';
 import { createNoteOn, isOnNote, toOnNote } from '../midi/on';
-import { detectPrefixConflict } from '../prefix/detect-prefix-conflict';
 import { loadMacrosDocument } from '../proto/load-macros-document';
+import { detectPrefixConflict } from '../utils/detect-prefix-conflict';
 
 type Options = {
   file: string;
@@ -60,10 +60,8 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
     }
   }
 
-  // Save our changes!
-  writeFileSync(ref, MacrosDocument.encode(MacrosDocument.fromObject(macrosDocument)).finish());
-
   console.log('');
+  writeFileSync(ref, MacrosDocument.encode(MacrosDocument.fromObject(macrosDocument)).finish());
   console.log(`Changes saved to ${ ref }`);
 
   process.exit(0);

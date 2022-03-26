@@ -9,6 +9,7 @@ export function createNoteOff(note: number, baseOffNote?: any) {
     isEnabled: true,
     type: 'ACTION_TYPE_COMMUNICATION',
     communication: {
+      // TODO: Need to look up
       deviceIdentification: {
         parameterUuid: {
           string: 'd6aa9ef2-aedf-437e-9657-18a649c9344b',

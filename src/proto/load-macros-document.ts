@@ -1,5 +1,5 @@
-import { load, Type } from 'protobufjs';
 import { join } from 'path';
+import { load, Type } from 'protobufjs';
 
 export function loadMacrosDocument(): Promise<Type> {
   return new Promise((resolve, reject) => {
