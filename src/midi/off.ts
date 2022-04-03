@@ -12,8 +12,9 @@ export function createNoteOff(note: number, baseOffNote?: any) {
       // TODO: Need to look up
       deviceIdentification: {
         parameterUuid: {
-          string: 'd6aa9ef2-aedf-437e-9657-18a649c9344b',
+          string: '6FEED632-7520-45E3-BCA0-9D3C2B11E6D4',
         },
+        parameterName: 'MIDI',
       },
       midiCommand: {
         state: 'STATE_OFF',

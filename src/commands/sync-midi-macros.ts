@@ -54,7 +54,7 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
         .filter(macroName => detectPrefixConflict(macro.name, macroName))
         .map(macroName => macroNameToNote[macroName] as number)
         .map(note => createNoteOff(note, firstOffNote));
-    console.log(`+ ${ macro.name } has ${ macro.actions.length } off notes`);
+    console.log(`+ ${ macro.name } has ${ macro.actions.length } off notes with on note ${ onNote }`);
     if (onNote !== null) {
       macro.actions.unshift(createNoteOn(onNote));
     }
