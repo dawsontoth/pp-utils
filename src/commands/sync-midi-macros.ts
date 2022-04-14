@@ -2,7 +2,7 @@ import { promises as fs, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import type { Arguments, CommandBuilder } from 'yargs';
 import { createNoteOff, isOffNote } from '../midi/off';
-import { createNoteOn, isOnNote, toOnNote } from '../midi/on';
+import { createNoteOn, isOnNote, extractMidiOnNote } from '../midi/on';
 import { loadMacrosDocument } from '../proto/load-macros-document';
 import { detectPrefixConflict } from '../utils/detect-prefix-conflict';
 
@@ -33,15 +33,12 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
 
   // Keep track of some state.
   const macroNameToNote: Record<string, number | null> = {};
-  let firstOffNote: any = null;
+  let midiUuid: string = midiMacros[0].actions[0].communication.deviceIdentification.parameterUuid.string;
 
   // Find all the "on" notes.
   for (const macro of midiMacros) {
     const onAction = macro.actions.find(isOnNote);
-    if (!firstOffNote) {
-      firstOffNote = macro.actions.find(isOffNote);
-    }
-    macroNameToNote[macro.name] = onAction ? toOnNote(onAction) : null;
+    macroNameToNote[macro.name] = onAction ? extractMidiOnNote(onAction) : null;
   }
 
   // Synchronize the off notes.
@@ -53,10 +50,10 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
         .filter(macroName => macroNameToNote[macroName] !== null)
         .filter(macroName => detectPrefixConflict(macro.name, macroName))
         .map(macroName => macroNameToNote[macroName] as number)
-        .map(note => createNoteOff(note, firstOffNote));
+        .map(note => createNoteOff(note, midiUuid));
     console.log(`+ ${ macro.name } has ${ macro.actions.length } off notes with on note ${ onNote }`);
     if (onNote !== null) {
-      macro.actions.unshift(createNoteOn(onNote));
+      macro.actions.unshift(createNoteOn(onNote, midiUuid));
     }
   }
 

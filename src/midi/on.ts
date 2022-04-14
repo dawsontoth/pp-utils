@@ -1,6 +1,6 @@
 import { v4 as createUUIDV4 } from 'uuid';
 
-export function createNoteOn(note: number): any {
+export function createNoteOn(note: number, deviceUuid: string): any {
   return {
     // TODO: Need to look up
     uuid: {
@@ -10,10 +10,9 @@ export function createNoteOn(note: number): any {
     isEnabled: true,
     type: 'ACTION_TYPE_COMMUNICATION',
     communication: {
-      // TODO: Need to look up
       deviceIdentification: {
         parameterUuid: {
-          string: '6FEED632-7520-45E3-BCA0-9D3C2B11E6D4',
+          string: deviceUuid,
         },
         parameterName: 'MIDI',
       },
@@ -26,7 +25,7 @@ export function createNoteOn(note: number): any {
   };
 }
 
-export function toOnNote(action: any): number {
+export function extractMidiOnNote(action: any): number {
   return action.communication.midiCommand.note;
 }
 

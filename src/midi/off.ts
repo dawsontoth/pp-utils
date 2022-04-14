@@ -1,18 +1,17 @@
 import { v4 as createUUIDV4 } from 'uuid';
 
-export function createNoteOff(note: number, baseOffNote?: any) {
+export function createNoteOff(note: number, deviceUuid: string) {
   return {
     uuid: {
-      string: baseOffNote?.uuid.string || createUUIDV4(),
+      string: createUUIDV4(),
     },
     name: 'MIDI Note Off',
     isEnabled: true,
     type: 'ACTION_TYPE_COMMUNICATION',
     communication: {
-      // TODO: Need to look up
       deviceIdentification: {
         parameterUuid: {
-          string: '6FEED632-7520-45E3-BCA0-9D3C2B11E6D4',
+          string: deviceUuid,
         },
         parameterName: 'MIDI',
       },
