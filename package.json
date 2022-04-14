@@ -10,6 +10,9 @@
     "clean": "rm -Rf build/*",
     "build": "tsc",
     "permission": "chmod +x ./build/cli.js",
+    "decode-macros": "npm run build && npm run permission && ./build/cli.js convert-proto-to-json ./binaries/Macros",
+    "encode-macros": "npm run build && npm run permission && ./build/cli.js convert-json-to-proto ./binaries/Macros.json",
+    "sync-macros": "npm run build && npm run permission && ./build/cli.js sync-midi-macros ./binaries/Macros",
     "link": "npm link",
     "test": "jest"
   },
